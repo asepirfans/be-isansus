@@ -12,6 +12,13 @@ const createSensor = async (req, res) => {
         };
         await Sensor.create(dataSensor);
 
+        const dataCount = await Sensor.countDocuments();
+
+    // Jika sudah mencapai batasan (misalnya 100 data), lakukan reset
+        if (dataCount >= 100) {
+        await Sensor.deleteMany(); // Reset data
+        }
+
         res.status(201).json({
             success: true,
             statusCode: res.statusCode,
