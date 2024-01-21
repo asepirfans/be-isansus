@@ -28,7 +28,7 @@ const createSensor = async (req, res) => {
     }
 };
 
-const getSensor = async(req,res) => {
+const getSensors = async(req,res) => {
     try {
         const dataSensor = await Sensor.find();
         if (!dataSensor) {
@@ -44,4 +44,24 @@ const getSensor = async(req,res) => {
     }
 }
 
-module.exports = { createSensor, getSensor };
+const getSensor = async (req, res) => {
+    try {
+      const dataSensor = await Sensor.find()
+        .sort({waktu:-1}).limit(1); // Hanya mengambil satu dokumen (data terbaru)
+  
+      if (!dataSensor || dataSensor.length === 0) {
+        return res.status(404).json({ message: 'Data tidak ditemukan' });
+      }
+  
+      res.status(200).json({
+        success: true,
+        statusCode: res.statusCode,
+        data: dataSensor,
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  
+
+module.exports = { createSensor, getSensor, getSensors };
