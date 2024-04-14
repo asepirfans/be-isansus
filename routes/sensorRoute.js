@@ -7,7 +7,4 @@ router.post('/sensor',  sensorController.createSensor),
 router.get('/sensor',  sensorController.getSensor),
 router.get('/sensors',  sensorController.getSensors),
 
-router.post('/wifi', wifiController.createWifi),
-router.get('/wifi', wifiController.getWifi),
-
 module.exports = router;
